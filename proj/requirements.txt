@@ -1,9 +1,0 @@
-django-filter
-django
-djangorestframework
-celery
-flower
-celery[redis]
-markdown
-mongoengine
-psycopg2

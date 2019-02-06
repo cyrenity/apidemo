@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'loyalty92',
-        'USER': 'loyalty92',
-        'PASSWORD': 'loyalty92',
+        'NAME': 'apidemo',
+        'USER': 'apidemo',
+        'PASSWORD': 'apidemo',
         'HOST': 'localhost',
         'PORT': '',
     }
