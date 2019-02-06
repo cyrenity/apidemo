@@ -21,7 +21,7 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
     @action(detail=True, url_path='taskstatus/(?P<task_id>[^/.]+)')
-    def taskstatus(self, request, **kwargs):
+    def task_status(self, request, **kwargs):
         self.__setattr__('description', 'Returns individual celery task status')
         self.__setattr__('name', 'Task status')
 
@@ -38,9 +38,8 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
                     'tracking_id': kwargs.get('tracking_id')}
         return Response(response, template_name='tasklist.html')
 
-
     @action(detail=True, name='Task results')
-    def fetch_celery_results(self, request, *args, **kwargs):
+    def fetch_results(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         tasks = serializer.data['tasks']
@@ -51,7 +50,7 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @action(detail=True, description='Initialize celery tasks', permission_classes=(IsOwner,), name='Initialize tasks')
-    def initialize_celery_tasks(self, request, *args, **kwargs):
+    def initialize_tasks(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         tasks = serializer.data['tasks']

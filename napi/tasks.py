@@ -1,5 +1,6 @@
 from proj.celery import app
 from celery.signals import task_failure
+from datetime import datetime
 import time
 
 
@@ -49,7 +50,7 @@ class PrintingTask(app.Task):
     def run(self, data):
         self.update_state(state="PRINTING", meta={'info': 'Printing is in process'})
         time.sleep(10)
-        data = {'result': "Printed"}
+        data = {'result': "Printed", "printing_timestamp": datetime.now()}
         return data
 
 

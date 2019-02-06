@@ -1,7 +1,8 @@
 from __future__ import absolute_import, unicode_literals
-import os
 from django.core.management.base import BaseCommand
-from proj.celery import  app
+from proj.celery import app
+from django.utils import autoreload
+
 
 class Command(BaseCommand):
     help = 'Run celery worker'
@@ -11,14 +12,18 @@ class Command(BaseCommand):
         parser.add_argument('-Q', '--queues', type=str, help='Comma seperated list of queues e.g. -Q default,feed_tasks')
 
     def handle(self, *args, **kwargs):
-        queues = kwargs['queues']
+        self.__setattr__('queues', kwargs['queues'])
+        autoreload.main(self._restart_celery)
 
-        if not queues:
-            queues = 'default'
+    def _restart_celery(self):
+
+        if not self.queues:
+            self.queues = 'default'
 
         argv = [
             'worker',
             '--loglevel=INFO',
-            '-Q %s' % queues
+            '-Q%s' % (self.queues.strip())
         ]
+
         app.worker_main(argv)

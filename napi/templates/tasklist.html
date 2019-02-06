@@ -78,7 +78,7 @@
         var table   = $('#tasklist').DataTable( {
             processing: true,
             ajax: {
-                url: "../fetch_celery_results/",
+                url: "../fetch_results/",
                 dataSrc: 'tasks',
                 complete: function(xhr, status){
                     console.log(xhr.responseText);
