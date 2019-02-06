@@ -10,16 +10,15 @@ class TaskSerializer(serializers.ModelSerializer):
 
 
 class ProcessQueueActionSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
     url = serializers.HyperlinkedIdentityField(view_name='pq-detail', lookup_field='tracking_id')
     tasks = TaskSerializer(many=True, required=False, read_only=True)
     owner = serializers.CharField(read_only=True)
+    tracking_id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = ProcessQueueAction
-        fields = ('url', 'name',  'gender', 'type', 'remarks',
-                  'citizen_number', 'phone', 'owner', 'created', 'tasks' )
-        read_only_fields = ('tracking_id',)
+        fields = ('url',  'tracking_id', 'name',  'gender', 'type', 'remarks',
+                  'citizen_number', 'phone', 'owner', 'created', 'tasks',)
 
     def validate_citizen_number(self, value):
         """
