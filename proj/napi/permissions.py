@@ -17,6 +17,16 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return obj.owner == request.user.username
 
 
+class IsOwner(permissions.BasePermission):
+    """
+    Custom permission to only allow owners of an object to edit it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Only allowed to the owner of the object.
+        return obj.owner == request.user.username
+
+
 class ReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:

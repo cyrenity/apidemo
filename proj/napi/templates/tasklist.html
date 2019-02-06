@@ -44,7 +44,7 @@
                     <tr>
                         <th>Seq</th>
                         <th>Name</th>
-                        <th>Id</th>
+                        <th>Tracking Id</th>
                         <th>Url</th>
                         <th>Status</th>
                         <th>Response</th>
@@ -54,7 +54,7 @@
                     <tr>
                         <th>Seq</th>
                         <th>Name</th>
-                        <th>Id</th>
+                        <th>Tracking Id</th>
                         <th>Url</th>
                         <th>Status</th>
                         <th>Response</th>
@@ -95,7 +95,12 @@
             columns: [
                 { data: "id" },
                 { data: "name" },
-                { data: "task_id" },
+                {
+                    data: null,
+                    render: function (data, type, row, meta) {
+                        return {{ tracking_id }};
+                    }
+                },
                 {
                     data: null,
                     render: function(data, type, row, meta){

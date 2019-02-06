@@ -8,7 +8,7 @@ GENDER = [('male', 'Male'), ('female', 'Female'), ('trans', 'Transgender/Other')
 
 def sequence_id():
   with connection.cursor() as cursor:
-    cursor.execute("""SELECT nextval('tracking_id')""")
+    cursor.execute("""SELECT nextval('tracking_id_seq')""")
     return cursor.fetchone()[0]
 
 

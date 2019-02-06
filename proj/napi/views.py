@@ -10,7 +10,7 @@ from rest_framework.utils.breadcrumbs import get_breadcrumbs
 from rest_framework.utils.serializer_helpers import ReturnDict
 
 from napi.models import ProcessQueueAction
-from napi.permissions import IsOwnerOrReadOnly
+from napi.permissions import IsOwnerOrReadOnly,IsOwner
 from napi.serializers import ProcessQueueActionSerializer, TaskSerializer
 
 from mongoengine import connect
@@ -43,7 +43,8 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
     def display_results(self, request, *args, **kwargs):
         breadcrumbs = get_breadcrumbs(request.path, request)
         response = {'breadcrumblist': breadcrumbs, 'name': 'Process Queue Action Graph Display',
-                    'description': 'Showing visual/HTML representation of API instance'}
+                    'description': 'Showing visual/HTML representation of API instance',
+                    'tracking_id': kwargs.get('tracking_id')}
         return Response(response, template_name='tasklist.html')
 
 
@@ -58,7 +59,7 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    @action(detail=True, description='Initialize celery tasks', permission_classes=(IsOwnerOrReadOnly,))
+    @action(detail=True, description='Initialize celery tasks', permission_classes=(IsOwner,))
     def initialize_celery_tasks(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
