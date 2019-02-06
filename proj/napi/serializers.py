@@ -17,9 +17,9 @@ class ProcessQueueActionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProcessQueueAction
-        fields = ('url', 'name', 'tracking_id', 'gender', 'type', 'remarks',
+        fields = ('url', 'name',  'gender', 'type', 'remarks',
                   'citizen_number', 'phone', 'owner', 'created', 'tasks' )
-        read_only_fields = ('tracking_id', 'tasks')
+        read_only_fields = ('tracking_id',)
 
     def validate_citizen_number(self, value):
         """

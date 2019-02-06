@@ -1,5 +1,3 @@
-import json
-
 from celery import chain
 from celery.result import AsyncResult
 from rest_framework import viewsets, status, renderers
@@ -7,17 +5,10 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.utils.breadcrumbs import get_breadcrumbs
-from rest_framework.utils.serializer_helpers import ReturnDict
-
 from napi.models import ProcessQueueAction
 from napi.permissions import IsOwnerOrReadOnly,IsOwner
 from napi.serializers import ProcessQueueActionSerializer, TaskSerializer
-
-from mongoengine import connect
-
 from napi.tasks import VerificationTask, ReadyForNumberTask, PreparationTask, PrintingTask, PersonalizationTask
-
-connect('pq')
 
 
 class ProcessQueueActionViewSet(viewsets.ModelViewSet):
@@ -48,7 +39,7 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
         return Response(response, template_name='tasklist.html')
 
 
-    @action(detail=True)
+    @action(detail=True, name='Task results')
     def fetch_celery_results(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
@@ -59,7 +50,7 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    @action(detail=True, description='Initialize celery tasks', permission_classes=(IsOwner,))
+    @action(detail=True, description='Initialize celery tasks', permission_classes=(IsOwner,), name='Initialize tasks')
     def initialize_celery_tasks(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
