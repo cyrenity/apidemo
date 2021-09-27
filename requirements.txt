@@ -7,3 +7,4 @@ celery[redis]
 markdown
 mongoengine
 psycopg2
+gunicorn

@@ -1,0 +1,5 @@
+name: app
+apiVersion: v2
+description: A Helm chart for deploying demo app django rest framework wsgi app
+version: 1.0.0
+type: application
