@@ -1,2 +1,4 @@
 local:
   image: "cyrenity/demo-app"
+service:
+  type: NodePort
