@@ -30,10 +30,10 @@ spec:
                 secretKeyRef:
                   key: name
                   name: appsecrets
-            - name: DB_PASSWORD
+            - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  key: password
+                  key: pass
                   name: appsecrets
             - name: DB_HOST
               valueFrom:
