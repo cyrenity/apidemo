@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: {{ .Release.Name }}-app-deployment
   labels:
-    domain: app
+    domain: {{ .Release.Name }}-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      domain: app
+      domain: {{ .Release.Name }}-app
   template:
     metadata:
       name: app-template
       labels:
-        domain: app
+        domain: {{ .Release.Name }}-app
     spec:
       containers:
-        - name: app-image
-          image: {{.Values.image}}
+        - name: {{ .Release.Name }}-app
+          image: {{.Values.local.image}}:{{ .Values.global.image.releaseTag}}
           imagePullPolicy: Always
           env:
             - name: DB_USER
