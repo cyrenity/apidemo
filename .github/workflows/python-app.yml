@@ -47,7 +47,7 @@ jobs:
       run: |
         python manage.py test
 
-  api-package-job: 
+  app-package-job: 
     runs-on: ubuntu-latest
     needs: [health-check-job] 
     if: ${{ github.event_name == 'push' }} 
@@ -57,11 +57,11 @@ jobs:
       - name: Build & Publish Image 
         uses: docker/build-push-action@v1
         env:
-          app_name: apidemo
+          app_name: demo-app
         with:
           username: ${{ secrets.DOCKER_USER }} 
           password: ${{ secrets.DOCKER_PASSWORD }} 
-          dockerfile: "Dockerfile.api"
+          dockerfile: "Dockerfile.app"
           tag_with_sha: true 
   
   worker-package-job:
@@ -74,9 +74,39 @@ jobs:
       - name: Build & Publish Image 
         uses: docker/build-push-action@v1
         env:
-          app_name: workerdemo
+          app_name: demo-worker
         with:
           username: ${{ secrets.DOCKER_USER }} 
           password: ${{ secrets.DOCKER_PASSWORD }} 
           dockerfile: "Dockerfile.worker"
           tag_with_sha: true 
+  deploy-job: 
+      runs-on: ubuntu-latest
+      needs: [app-package-job, worker-package-job] 
+      if: ${{ github.event_name == 'push' }} # will be fire if the trigger event is a push event.
+      steps:
+        - name: Checkout code # checking out code.
+          uses: actions/checkout@v2
+        - name: Set Repo Location # steps required to find the image id of our image from contiainer registry
+          id: repo
+          run: echo "::set-output name=releaseTag::sha-$(git rev-parse --short HEAD)" 
+        - name: Install Helm # helm installation in our runner for deploying.
+          run: |
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+        - name: Helm Deploy # deploying our helm chart to our cluster
+          run: >
+            helm upgrade
+            --install
+            --set global.image.releaseTag=${{ steps.repo.outputs.releaseTag }}
+            --set user=${{ secrets.DB_USER }}
+            --set password=${{ secrets.DB_PASSWORD }}
+            --set host=${{ secrets.DB_HOST }}
+            --set port=${{ secrets.DB_PORT }}
+            --set name=${{ secrets.DB_NAME }}
+            --wait
+            --atomic
+            --dry-run --debug
+            apidemo
+            ./k8s
