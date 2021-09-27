@@ -48,7 +48,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }} 
           password: ${{ secrets.DOCKER_PASSWORD }} 
-          file: "/Dockerfile.api"
+          dockerfile: "Dockerfile.api"
           tag_with_sha: true 
   
   worker-package-job:
@@ -65,5 +65,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }} 
           password: ${{ secrets.DOCKER_PASSWORD }} 
-          file: "/Dockerfile.worker"
+          dockerfile: "Dockerfile.worker"
           tag_with_sha: true 
