@@ -46,7 +46,6 @@ jobs:
         env:
           app_name: apidemo
         with:
-          username: cyrenity # default for gcr.io
+          username: ${{ secrets.DOCKER_USER }} # default for gcr.io
           password: ${{ secrets.DOCKER_PASSWORD }} # service account file to be set as secret
-          registry: gcr.io # gcr registry domain
           tag_with_sha: true # this will tag our image with commit id. For example our image our be gcr.io/project-id/github-django-actions/app:sha-7865423 where 7865423 is the short sha of our commit.
