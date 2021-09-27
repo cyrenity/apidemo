@@ -104,7 +104,7 @@ jobs:
             --install
             --set global.image.releaseTag=${{ steps.repo.outputs.releaseTag }}
             --set user=${{ secrets.DB_USER }}
-            --set password=${{ secrets.DB_PASSWORD }}
+            --set pass=${{ secrets.DB_PASS }}
             --set host=${{ secrets.DB_HOST }}
             --set port=${{ secrets.DB_PORT }}
             --set name=${{ secrets.DB_NAME }}
