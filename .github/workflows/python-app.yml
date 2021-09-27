@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }} 
           dockerfile: "Dockerfile.app"
           tag_with_sha: true 
-          repository: "demo-app"
+          repository: "cyrenity/demo-app"
   
   worker-package-job:
     runs-on: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }} 
           dockerfile: "Dockerfile.worker"
           tag_with_sha: true 
-          repository: "demo-worker"
+          repository: "cyrenity/demo-worker"
 
   deploy-job: 
       runs-on: ubuntu-latest
