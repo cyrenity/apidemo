@@ -5,15 +5,8 @@ from django.db.models.fields import *
 TYPES = [('type1', 'Type 1'), ('type2', 'Type 2'), ('type3', 'Type 3')]
 GENDER = [('male', 'Male'), ('female', 'Female'), ('trans', 'Transgender/Other')]
 
-
-def sequence_id():
-  with connection.cursor() as cursor:
-    cursor.execute("""SELECT nextval('tracking_id_seq')""")
-    return cursor.fetchone()[0]
-
-
 class ProcessQueueAction(models.Model):
-    tracking_id = BigIntegerField(primary_key=True, default=sequence_id)
+    tracking_id = BigIntegerField()
     name = CharField(max_length=40)
     phone = BigIntegerField()
     gender = CharField(max_length=10, choices=GENDER)
@@ -22,7 +15,6 @@ class ProcessQueueAction(models.Model):
     citizen_number = CharField(max_length=15)
     created = DateTimeField(auto_now=True)
     owner = CharField(max_length=40)
-
 
 class Tasks(models.Model):
     name = CharField(max_length=40)

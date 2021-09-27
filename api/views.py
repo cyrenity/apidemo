@@ -1,3 +1,4 @@
+import random
 from celery import chain
 from celery.result import AsyncResult
 from rest_framework import viewsets, status, renderers
@@ -18,7 +19,9 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
     lookup_field = 'tracking_id'
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        if serializer.is_valid():
+            serializer.validated_data['tracking_id'] = random.getrandbits(32)
+            serializer.save(owner=self.request.user)
 
     @action(detail=True, url_path='taskstatus/(?P<task_id>[^/.]+)')
     def task_status(self, request, **kwargs):

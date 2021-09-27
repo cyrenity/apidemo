@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'apidemo',
+        'NAME': 'apidemo.db',
     }
 }
 
@@ -141,6 +141,8 @@ CELERY_TASK_DEFAULT_QUEUE = 'default'
 CELERY_TIMEZONE = TIME_ZONE
 
 REST_FRAMEWORK = {
+
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_METADATA_CLASS': 'rest_framework.metadata.SimpleMetadata',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
