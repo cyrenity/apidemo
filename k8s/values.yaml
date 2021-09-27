@@ -2,8 +2,8 @@ global:
   image:
     releaseTag: ''
   db:
-    name: 'postgres'
-    host: 'localhost'
+    name: ''
+    host: ''
     port: 5432
-    user: 'postgres'
-    pass: 'DIFFICULTPASSWORD'
+    user: ''
+    pass: ''

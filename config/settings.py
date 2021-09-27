@@ -73,10 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-
-
-if os.getenv('GITHUB_WORKFLOW') or os.environ.get('DJANGO_DEVELOPMENT', 'true'):
+if os.getenv('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -99,27 +96,6 @@ else:
         }
     }
 
-
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'apidemo.db',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'apidemo',
-#         'USER': 'apidemo',
-#         'PASSWORD': 'apidemo',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
 
 
 # Password validation
@@ -153,7 +129,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 # Static files (CSS, JavaScript, Images)
