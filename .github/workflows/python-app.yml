@@ -103,11 +103,11 @@ jobs:
             helm template 
             --set global.image.releaseTag=${{ steps.repo.outputs.releaseTag }}
             --set global.rabbit.broker=apidemo-rabbitmq-service
-            --set user=${{ secrets.DB_USER }}
-            --set pass=${{ secrets.DB_PASS }}
-            --set host=${{ secrets.DB_HOST }}
-            --set port=${{ secrets.DB_PORT }}
-            --set name=${{ secrets.DB_NAME }}
+            --set global.db.user=${{ secrets.DB_USER }}
+            --set global.db.pass=${{ secrets.DB_PASS }}
+            --set global.db.host=${{ secrets.DB_HOST }}
+            --set global.db.port=${{ secrets.DB_PORT }}
+            --set global.db.name=${{ secrets.DB_NAME }}
             --wait
             --atomic
             apidemo
@@ -118,11 +118,11 @@ jobs:
         #     --install
         #     --set global.image.releaseTag=${{ steps.repo.outputs.releaseTag }}
         #     --set global.rabbit.broker=apidemo-rabbitmq-service
-        #     --set user=${{ secrets.DB_USER }}
-        #     --set pass=${{ secrets.DB_PASS }}
-        #     --set host=${{ secrets.DB_HOST }}
-        #     --set port=${{ secrets.DB_PORT }}
-        #     --set name=${{ secrets.DB_NAME }}
+        #     --set global.db.user=${{ secrets.DB_USER }}
+        #     --set global.db.pass=${{ secrets.DB_PASS }}
+        #     --set global.db.host=${{ secrets.DB_HOST }}
+        #     --set global.db.port=${{ secrets.DB_PORT }}
+        #     --set global.db.name=${{ secrets.DB_NAME }}
         #     --wait
         #     --atomic
         #     --dry-run --debug
