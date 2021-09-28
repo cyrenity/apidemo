@@ -143,6 +143,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_DEFAULT_QUEUE = 'default'
 CELERY_TIMEZONE = TIME_ZONE
+
 if not os.getenv('GITHUB_WORKFLOW'):
     CELERY_BROKER_URL = "pyamqp://%s" % os.getenv('BROKER_URL')
 
@@ -160,4 +161,5 @@ REST_FRAMEWORK = {
 }
 
 ALLOWED_HOSTS = ['*']
+
 
