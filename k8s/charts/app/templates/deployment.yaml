@@ -45,5 +45,10 @@ spec:
                 secretKeyRef:
                   key: port
                   name: appsecrets
+            - name: BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  key: broker_url
+                  name: appsecrets
           ports:
             - containerPort: 8000

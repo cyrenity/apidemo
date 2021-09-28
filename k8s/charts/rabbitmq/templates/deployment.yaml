@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-rabbitmq-deployment
+  labels:
+    domain: {{ .Release.Name }}-rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      domain: {{ .Release.Name }}-rabbitmq
+  template:
+    metadata:
+      name: worker-template
+      labels:
+        domain: {{ .Release.Name }}-rabbitmq
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-rabbitmq
+          image: {{.Values.local.image}}:{{.Values.local.tag}}
+          imagePullPolicy: Always

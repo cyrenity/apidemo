@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-rabbitmq-service 
+spec:
+  selector:
+    domain: {{ .Release.Name }}-rabbitmq
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 5672
+    - port: 15672
