@@ -1,0 +1,3 @@
+local:
+  image: "rabbitmq"
+  tag: "3-management-alpine"
