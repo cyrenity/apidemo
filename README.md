@@ -1,4 +1,4 @@
-# apidemo
+# apidemo [[![Python application](https://github.com/cyrenity/apidemo/actions/workflows/python-app.yml/badge.svg)](https://github.com/cyrenity/apidemo/actions/workflows/python-app.yml)]
 
 ## End to end CI/CD pipeline for Django DRF + Celery
 
