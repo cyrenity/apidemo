@@ -98,11 +98,11 @@ jobs:
             curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
             chmod 700 get_helm.sh
             ./get_helm.sh
-        - name: Helm Deploy # deploying our helm chart to our cluster
+        - name: Generate Kubernetes YAML resource files from Helm chart
           run: >
-            helm upgrade
-            --install
+            helm template 
             --set global.image.releaseTag=${{ steps.repo.outputs.releaseTag }}
+            --set global.rabbit.broker=apidemo-rabbitmq-service
             --set user=${{ secrets.DB_USER }}
             --set pass=${{ secrets.DB_PASS }}
             --set host=${{ secrets.DB_HOST }}
@@ -110,6 +110,21 @@ jobs:
             --set name=${{ secrets.DB_NAME }}
             --wait
             --atomic
-            --dry-run --debug
             apidemo
             ./k8s
+        # - name: Helm Deploy # deploying our helm chart to our cluster
+        #   run: >
+        #     helm upgrade
+        #     --install
+        #     --set global.image.releaseTag=${{ steps.repo.outputs.releaseTag }}
+        #     --set global.rabbit.broker=apidemo-rabbitmq-service
+        #     --set user=${{ secrets.DB_USER }}
+        #     --set pass=${{ secrets.DB_PASS }}
+        #     --set host=${{ secrets.DB_HOST }}
+        #     --set port=${{ secrets.DB_PORT }}
+        #     --set name=${{ secrets.DB_NAME }}
+        #     --wait
+        #     --atomic
+        #     --dry-run --debug
+        #     apidemo
+        #     ./k8s
