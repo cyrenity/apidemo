@@ -8,4 +8,4 @@ global:
     user: ''
     pass: ''
   rabbit:
-    broker: 'guest@apidemo-rabbitmq-service'
+    broker: 'apidemo-rabbitmq-service'
