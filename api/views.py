@@ -74,8 +74,9 @@ class ProcessQueueActionViewSet(viewsets.ModelViewSet):
 
             task_ids = self.get_task_list(result, pq_chain.tasks)
             task_serializer = TaskSerializer(data=task_ids, many=True)
+            print(task_ids)
             if task_serializer.is_valid():
-                task_serializer.save(tracking_id=instance.tracking_id)
+                task_serializer.save(tracking_id=instance.id)
 
             response = {'response': 'Task initialized successfully', 'tasks': list(task_serializer.data)}
             return Response(response)
