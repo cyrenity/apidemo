@@ -73,10 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-
-
-if os.getenv('GITHUB_WORKFLOW') or os.environ.get('DJANGO_DEVELOPMENT', 'true'):
+if os.getenv('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -93,33 +90,12 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.getenv('DB_NAME'),
             'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'PASSWORD': os.getenv('DB_PASS'),
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT')
         }
     }
 
-
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'apidemo.db',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'apidemo',
-#         'USER': 'apidemo',
-#         'PASSWORD': 'apidemo',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
 
 
 # Password validation
@@ -153,12 +129,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 CELERY_RESULT_BACKEND = 'rpc://'
@@ -167,6 +143,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_DEFAULT_QUEUE = 'default'
 CELERY_TIMEZONE = TIME_ZONE
+
+if not os.getenv('GITHUB_WORKFLOW'):
+    CELERY_BROKER_URL = "pyamqp://%s" % os.getenv('BROKER_URL')
+
 
 REST_FRAMEWORK = {
 
@@ -181,4 +161,5 @@ REST_FRAMEWORK = {
 }
 
 ALLOWED_HOSTS = ['*']
+
 

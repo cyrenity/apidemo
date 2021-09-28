@@ -1,0 +1,5 @@
+name: rabbitmq
+apiVersion: v2
+description: A Helm chart for deploying rabbitmq
+version: 1.0.0
+type: application

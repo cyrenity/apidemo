@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-app-deployment
+  name: {{ .Release.Name }}-worker-deployment
   labels:
-    domain: {{ .Release.Name }}-app
+    domain: {{ .Release.Name }}-worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      domain: {{ .Release.Name }}-app
+      domain: {{ .Release.Name }}-worker
   template:
     metadata:
-      name: app-template
+      name: worker-template
       labels:
-        domain: {{ .Release.Name }}-app
+        domain: {{ .Release.Name }}-worker
     spec:
       containers:
-        - name: {{ .Release.Name }}-app
+        - name: {{ .Release.Name }}-worker
           image: {{.Values.local.image}}:{{ .Values.global.image.releaseTag}}
           imagePullPolicy: Always
           env:
@@ -50,5 +50,3 @@ spec:
                 secretKeyRef:
                   key: broker_url
                   name: appsecrets
-          ports:
-            - containerPort: 8000
